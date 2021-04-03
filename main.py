@@ -1,13 +1,23 @@
-from pynput import mouse
-from pynput.mouse import Button, Controller
+from pynput import mouse, keyboard
+from pynput.keyboard import Key, Controller
+import threading
+import time
 
-mouse = Controller()
+keyboard = Controller()
+toggle = False
 
 def on_scroll(x, y, dx, dy):
     if dy < 0:
-        mouse.click(Button.left, 1)
-        mouse.click(Button.right, 1)
+        keyboard.type("e")
+        time.sleep(0.01)
+        keyboard.type(";")
 
-listener = mouse.Listener(
-    on_scroll=on_scroll)
-listener.start()
+def setup(x, y, dx, dy):
+    x = threading.Thread(target=on_scroll, args=(x, y, dx, dy), daemon=True)
+    x.start()
+
+
+
+with mouse.Listener(
+        on_scroll=setup) as listener:
+    listener.join()
