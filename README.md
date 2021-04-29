@@ -1,2 +1,2 @@
 # FN Scroll Wheel Reset
- epic games can not hold me back
+re-implemented the scroll wheel reset mechanic after epic games removed it
